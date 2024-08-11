@@ -109,7 +109,7 @@ public class TryTest extends AbstractValueTest {
     public void shouldExecuteAndFinallyOnFailure(){
         final AtomicInteger count = new AtomicInteger();
         Try.run(() -> { throw new IllegalStateException(FAILURE); })
-                .andFinallyTry(() -> count.set(1));
+                .andFinally(() -> count.set(1));
         assertThat(count.get()).isEqualTo(1);
     }
 

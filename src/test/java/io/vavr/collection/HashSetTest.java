@@ -51,56 +51,20 @@ public class HashSetTest extends AbstractSetTest {
                 final Iterable<T> expected = (Iterable<T>) obj;
                 final java.util.Map<T, Integer> actualMap = countMap(actual);
                 final java.util.Map<T, Integer> expectedMap = countMap(expected);
-                assertThat(actualMap.size()).isEqualTo(expectedMap.size());
-                actualMap.keySet().forEach(k -> assertThat(actualMap.get(k)).isEqualTo(expectedMap.get(k)));
+                HashSetTest.this.assertThat(actualMap.size()).isEqualTo(expectedMap.size());
+                actualMap.keySet().forEach(k -> HashSetTest.this.assertThat(actualMap.get(k)).isEqualTo(expectedMap.get(k)));
                 return this;
             }
 
             private java.util.Map<T, Integer> countMap(Iterable<? extends T> it) {
                 final java.util.HashMap<T, Integer> cnt = new java.util.HashMap<>();
-                it.forEach(i -> cnt.merge(i, 1, (v1, v2) -> v1 + v2));
+                it.forEach(i -> cnt.merge(i, 1, Integer::sum));
                 return cnt;
             }
         };
     }
 
-    @Override
-    protected <T> ObjectAssert<T> assertThat(T actual) {
-        return new ObjectAssert<T>(actual) {
-        };
-    }
-
-    @Override
-    protected BooleanAssert assertThat(Boolean actual) {
-        return new BooleanAssert(actual) {
-        };
-    }
-
-    @Override
-    protected DoubleAssert assertThat(Double actual) {
-        return new DoubleAssert(actual) {
-        };
-    }
-
-    @Override
-    protected IntegerAssert assertThat(Integer actual) {
-        return new IntegerAssert(actual) {
-        };
-    }
-
-    @Override
-    protected LongAssert assertThat(Long actual) {
-        return new LongAssert(actual) {
-        };
-    }
-
-    @Override
-    protected StringAssert assertThat(String actual) {
-        return new StringAssert(actual) {
-        };
-    }
-
-    // -- construction
+  // -- construction
 
     @Override
     protected <T> Collector<T, ArrayList<T>, HashSet<T>> collector() {
